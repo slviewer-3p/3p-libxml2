@@ -1,2 +1,7 @@
 # Use Public Upload Locations
 public_build = true
+
+
+# Only build linux. 
+build_CYGWIN = false
+build_Darwin = false
