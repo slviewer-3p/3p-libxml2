@@ -69,6 +69,7 @@
           <array>
             <string>include/libxml2/libxml/*.h</string>
             <string>lib/release/libxml*.so*</string>
+            <string>/lib/release/*.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
