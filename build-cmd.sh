@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # turn on verbose debugging output for parabuild logs.
 set -x
