@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>86f045c2a8881309eedb3d4ca960077f</string>
+              <string>af1065da29fa7dd636c1d25642de960b</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/249037/arch/Darwin/installer/zlib-1.2.6-darwin-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/Darwin/installer/zlib-1.2.8-darwin-20131016.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>39797a9e13ece9c05c713b55ee0175f0</string>
+              <string>072472fac98a5704e290109b45d102b8</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/249037/arch/Linux/installer/zlib-1.2.6-linux-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/Linux/installer/zlib-1.2.8-linux-20131016.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>81ee608ed385b291e4e7af973ec4b021</string>
+              <string>00d7f40c3c797006eea9afbf03177c08</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib/rev/249037/arch/CYGWIN/installer/zlib-1.2.6-windows-20120207.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/CYGWIN/installer/zlib-1.2.8-windows-20131017.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
