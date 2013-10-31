@@ -33,6 +33,12 @@ case "$AUTOBUILD_PLATFORM" in
             CPPFLAGS="-m32" LDFLAGS="-m32 -L$stage/packages/lib/release" ./configure --prefix="$stage"  --with-python=no
             make
             make install
+
+            # conditionally run unit tests
+            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
+                make check
+            fi
+
         popd
         mv lib release
         mkdir -p lib
@@ -40,7 +46,7 @@ case "$AUTOBUILD_PLATFORM" in
     ;;
     *)
         echo "platform not supported"
-        exit -1
+        fail
     ;;
 esac
 
