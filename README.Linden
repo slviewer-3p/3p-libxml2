@@ -32,8 +32,10 @@
 
 2.  Modifications
 
-    Unit test 'test/errors/name2.xml' appears to have old test
-    data.  Modified result which captures the current error.
+    Unit test 'test/errors/name2.xml' appears to be sensitive to
+    running environment.  Supplied version doesn't work on my pdp
+    (pdp14) but modified version doesn't work on Squeeze build
+    host.  Both detect an error, just differently.
 
 
 3.  Source Origin
