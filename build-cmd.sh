@@ -9,8 +9,8 @@ TOP="$(dirname "$0")"
 
 PROJECT=libxml2
 LICENSE=COPYING
-VERSION="2.7.8"
-SOURCE_DIR="$PROJECT-$VERSION"
+VERSION="2.9.1"
+SOURCE_DIR="$PROJECT"
 
 
 if [ -z "$AUTOBUILD" ] ; then 

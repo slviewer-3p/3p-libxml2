@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>af1065da29fa7dd636c1d25642de960b</string>
+              <string>0ce36088a56abc2df0ae83b1acea8806</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/Darwin/installer/zlib-1.2.8-darwin-20131016.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/Darwin/installer/zlib-1.2.8-darwin-20131031.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>072472fac98a5704e290109b45d102b8</string>
+              <string>a4f24d46f33f30c15300626e39feee54</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/Linux/installer/zlib-1.2.8-linux-20131016.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/Linux/installer/zlib-1.2.8-linux-20131031.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>00d7f40c3c797006eea9afbf03177c08</string>
+              <string>05d83a7b233abfbc938977be04cee999</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/282509/arch/CYGWIN/installer/zlib-1.2.8-windows-20131017.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/CYGWIN/installer/zlib-1.2.8-windows-20131031.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -55,7 +55,7 @@
     <key>package_description</key>
     <map>
       <key>copyright</key>
-      <string>Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved. </string>
+      <string>Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved.</string>
       <key>description</key>
       <string>Libxml2 is the XML C parser and toolkit developed for the Gnome project.</string>
       <key>license</key>
@@ -100,7 +100,7 @@
         </map>
       </map>
       <key>version</key>
-      <string>2.7.8</string>
+      <string>2.9.1</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
