@@ -18,7 +18,7 @@
 
     [ ]  Have you reverted/blocked checkin of files modified by
          configure such as all the *.in, configure itself, COPYING,
-         and other files?
+         acconfig.h and other files?
 
 
 1.  Introduction
@@ -34,8 +34,10 @@
 
     Unit test 'test/errors/name2.xml' appears to be sensitive to
     running environment.  Supplied version doesn't work on my pdp
-    (pdp14) but modified version doesn't work on Squeeze build
-    host.  Both detect an error, just differently.
+    (pdp14) but modified version doesn't work on Squeeze build host.
+    Both detect an error, just differently.  So, it is being disabled
+    by being renamed.  Some later version may handle this more
+    consistently.
 
 
 3.  Source Origin
