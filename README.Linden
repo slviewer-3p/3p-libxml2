@@ -20,14 +20,45 @@
          configure such as all the *.in, configure itself, COPYING,
          acconfig.h and other files?
 
+    [ ]  On Linux and Mac, confirm Zlib and ICU detection working
+         as expected.  That will typically mean these showing up
+         during the builds:
+
+            Checking zlib
+            checking zlib.h usability... yes
+            checking zlib.h presence... yes
+            checking for zlib.h... yes
+            checking for gzread in -lz... yes
+
+            ...
+            Disabling ICU support
+
+         (We'll revisit ICU support in the future...)
+
+    [ ]  Did the libraries pick up the correct version of zlib?
+         Xmllint?  Run strings over them:
+
+         $ strings stage/lib/debug/lib* | grep 1\\.[0-9]\\.
+         1.2.8
+         1.2.8
+         $ strings stage/lib/release/lib* | grep 1\\.[0-9]\\.
+         1.2.8
+         1.2.8
+         $ strings stage/bin/xmllint | grep 1\\.[0-9]\\.
+         1.2.8
+          deflate 1.2.8 Copyright 1995-2013 Jean-loup Gailly and Mark Adler 
+          inflate 1.2.8 Copyright 1995-2013 Mark Adler 
+
+    [ ]  Does the xmllint program (stage/bin/openssl) run as expected?
+         Are the library bindings (ldd/otool/depends.exe) as expected?
+
 
 1.  Introduction
 
     Simple build of libxml2 library from xmlsoft.org.
 
-    Repo structure *now* mostly follows standard conventions (see
-    section at end) but tags are different.  Tags on branch 'vendor'
-    have no 'vendor_' prefix and there are no release tags.
+    With 2.9.1, repo structure follows standard conventions (see
+    section at end).
 
 
 2.  Modifications
@@ -39,11 +70,59 @@
     by being renamed.  Some later version may handle this more
     consistently.
 
+    EBCDIC unit test fails on Windows and Mac due to source conversion
+    problems in platform libraries.  Test has been disabled by 'hg mv'
+    command moving it into a 'test/disabled_tests' subdirectory.
+
+    API unit test in the debug build takes an enormous amount of time
+    to run on Windows.  Be patient.
+
+    Windows makefile (win32/Makefile.msvc) is modified to work with
+    Linden zlib artifacts and is hardened against finding bash
+    commands that look like cmd.exe commands.
+
+    There's a second Windows build scheme based on project files but
+    it wasn't used for this.  It may or may not be more effective.
+
 
 3.  Source Origin
 
     2.9.1:
       ftp://xmlsoft.org/libxml2/libxml2-2.9.1.tar.gz
+
+
+4.  Package Contents
+
+    Common:
+    * include/libxml2/libxml/*.h
+
+    Windows (debug and release):
+    * lib/release/libxml2_a.lib
+    * lib/debug/libxml2_a.lib
+
+    Mac OS X (debug and release):
+    * lib/release/libxml2.a
+    * lib/debug/libxml2.a
+
+    Explicit -liconv required when linking with OS X libraries due to
+    Unicode support.
+
+    Linux (debug and release):
+    * lib/release/libxml2.a
+    * lib/debug/libxml2.a
+
+
+5.  Consumers/Dependents
+
+    Packages dependent on libxml2 which will need attention
+    (autobuild.xml) after changes.  This is not authoritative, use
+    appropriate build tools to find all dependents.
+
+    * fontconfig (should we actually decide to use it)
+
+    * colladadom
+
+    * viewer
 
 
 
@@ -116,7 +195,7 @@ successive code drop will be tagged "current".
  $ hg addremove
  $ hg commit -m "1.0 source drop"
  $ hg tag -r tip current
- $ # Optional:  hg tag -r current vendor_1.0
+ $ hg tag -r current 1.0
 
 We now have the current version of the libcomplex source code in
 branch "vendor", tagged "current" and in a non-version-specific source
@@ -130,10 +209,7 @@ customizations.
 
 We get to work customizing the libcomplex code.  Before we know it,
 our modified version of libcomplex is now completely integrated into
-our calculator program.  You might tag your production release at this
-point:
-
- $ # Optional:  hg tag -r tip 1.0
+our calculator program.
 
 A few weeks later, the developers of libcomplex release a new version
 of their library, version 1.1, which contains some features and
@@ -183,6 +259,13 @@ option and then dealt with individually with 'hg add' and 'hg rm'
 commands after 'hg addremove'.  (The readme file in the curl library
 should document a particularly challenging case.)
 
+The 'addremove' process doesn't have to be perfect.  Recreating the
+evolution of the upstream source tree isn't universally practical.
+But we'd like to capture movement of files in the vendor branch that
+are modified in the default branch.  If achieving that becomes too
+tedious, then re-implementation of the default branch edit in a new
+file is fine.  Just note it here for the next developer.
+
 Finally, once our current working copy contains only the libcomplex
 1.1 code, we commit the changes we made to get it looking that way.
 
@@ -192,7 +275,7 @@ tagged the version 1.0 vendor drop), and then merge the differences
 between the version 1.0 and version 1.1 into our default branch.
 
  $ hg tag -f -r tip current
- $ # Optional:  hg tag -r current vendor_1.1
+ $ hg tag -r current 1.1
  $ hg update default
  $ hg merge vendor
  # resolve all the conflicts between their changes and our changes
@@ -201,10 +284,7 @@ between the version 1.0 and version 1.1 into our default branch.
  $ hg commit -m "update with 1.1"
 
 Any additional work needed to get the merged library working can
-now be done on the default branch.  Once you have a release ready,
-you might tag the default branch head with the version:
-
- $ # Optional:  hg tag -r tip 1.1
+now be done on the default branch.
 
 
 Revision Tags
@@ -217,12 +297,13 @@ like to establish are:
  * 'current' Points to a succession of vendor releases checked into
    the 'vendor' branch.  Will almost always be at or close to branch
    head.
- * 'vendor_<version>' Optional tag on the 'vendor' branch pointing to
-   a verbatim checkin of a 3rd-party's <version> release.  Example:
-   vendor_7.21.1 for a particular version of libcurl we have used.
- * '<version>' Optional tag on the 'default' branch pointing to the
-   production code that integrates the vendor's <version> release with
-   Linden-specific changes.  Example:  7.21.1
+
+ * '<version>' Tag on the 'vendor' branch pointing to a verbatim
+   checkin of a 3rd-party's <version> release.  Example:  '7.21.1' for
+   a particular version of libcurl we have used.
+
+ * Release-type tags on the default branch aren't as useful given how
+   Mercurial handles tags and how autobuild works.
 
 
 Schematic of a Third-Party Repository
@@ -236,55 +317,44 @@ follows:
  1  1.0 code drop on branch 'vendor'
  4  Merge of 1.0 code onto branch 'default'
  5  Modifications to library we wish to keep over time.  Released.
- 7  1.1 code drop on branch 'vendor'
-10  Merge of 1.1 code onto branch 'default'
-11  Fixes to merge yielding production 1.1 library.  Released.
+ 6  1.1 code drop on branch 'vendor'
+ 9  Merge of 1.1 code onto branch 'default'
+10  Fixes to merge yielding production 1.1 library.  Released.
  
 
-@  changeset:   12:d3df8ad7daea
+@  changeset:   10:888229641f6e
 |  tag:         tip
-|  user:        Monty Brandenberg <monty@lindenlab.com>
-|  date:        Wed Oct 30 13:36:01 2013 -0400
-|  summary:     Added tag 1.1 for changeset 888229641f6e
-|
-o  changeset:   11:888229641f6e
-|  tag:         1.1
 |  user:        Monty Brandenberg <monty@lindenlab.com>
 |  date:        Wed Oct 30 13:35:51 2013 -0400
 |  summary:     Work to get 1.1 merge working.  Release.
 |
-o    changeset:   10:925ccdf09f50
-|\   parent:      6:c4975656c039
-| |  parent:      9:977001a08e48
+o    changeset:   9:925ccdf09f50
+|\   parent:      5:83c5775c23dc
+| |  parent:      8:977001a08e48
 | |  user:        Monty Brandenberg <monty@lindenlab.com>
 | |  date:        Wed Oct 30 13:35:20 2013 -0400
 | |  summary:     update with 1.1
 | |
-| o  changeset:   9:977001a08e48
+| o  changeset:   8:977001a08e48
 | |  branch:      vendor
 | |  user:        Monty Brandenberg <monty@lindenlab.com>
 | |  date:        Wed Oct 30 13:33:49 2013 -0400
-| |  summary:     Added tag vendor_1.1 for changeset 5f6cb89add91
+| |  summary:     Added tag 1.1 for changeset 5f6cb89add91
 | |
-| o  changeset:   8:59bce0f6d12f
+| o  changeset:   7:59bce0f6d12f
 | |  branch:      vendor
 | |  user:        Monty Brandenberg <monty@lindenlab.com>
 | |  date:        Wed Oct 30 13:33:41 2013 -0400
 | |  summary:     Added tag current for changeset 5f6cb89add91
 | |
-| o  changeset:   7:5f6cb89add91
+| o  changeset:   6:5f6cb89add91
 | |  branch:      vendor
 | |  tag:         current
-| |  tag:         vendor_1.1
+| |  tag:         1.1
 | |  parent:      3:8525ad934ecd
 | |  user:        Monty Brandenberg <monty@lindenlab.com>
 | |  date:        Wed Oct 30 13:33:29 2013 -0400
 | |  summary:     1.1 source drop
-| |
-o |  changeset:   6:c4975656c039
-| |  user:        Monty Brandenberg <monty@lindenlab.com>
-| |  date:        Wed Oct 30 13:32:46 2013 -0400
-| |  summary:     Added tag 1.0 for changeset 83c5775c23dc
 | |
 o |  changeset:   5:83c5775c23dc
 | |  tag:         1.0
@@ -303,7 +373,7 @@ o |  changeset:   4:bccb736585f4
 | |  branch:      vendor
 | |  user:        Monty Brandenberg <monty@lindenlab.com>
 | |  date:        Wed Oct 30 13:30:21 2013 -0400
-| |  summary:     Added tag vendor_1.0 for changeset 8ac3828d03bb
+| |  summary:     Added tag 1.0 for changeset 8ac3828d03bb
 | |
 | o  changeset:   2:7aa1a1cb62d9
 | |  branch:      vendor
@@ -313,7 +383,7 @@ o |  changeset:   4:bccb736585f4
 | |
 | o  changeset:   1:8ac3828d03bb
 |/   branch:      vendor
-|    tag:         vendor_1.0
+|    tag:         1.0
 |    user:        Monty Brandenberg <monty@lindenlab.com>
 |    date:        Wed Oct 30 13:30:09 2013 -0400
 |    summary:     1.0 source drop

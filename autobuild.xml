@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0ce36088a56abc2df0ae83b1acea8806</string>
+              <string>44f898ad513cc40ace8609073a594fa5</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/Darwin/installer/zlib-1.2.8-darwin-20131031.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/Darwin/installer/zlib-1.2.8-darwin-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>a4f24d46f33f30c15300626e39feee54</string>
+              <string>8db178c604df50682d85bb8a78065903</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/Linux/installer/zlib-1.2.8-linux-20131031.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/Linux/installer/zlib-1.2.8-linux-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -42,9 +42,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>05d83a7b233abfbc938977be04cee999</string>
+              <string>99157bfc04655ca870d4c5ddd4358f34</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-zlib-update/rev/283219/arch/CYGWIN/installer/zlib-1.2.8-windows-20131031.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290080/arch/CYGWIN/installer/zlib-1.2.8-windows-20140515.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -66,6 +66,68 @@
       <string>libxml2</string>
       <key>platforms</key>
       <map>
+        <key>common</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>Release</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>Release</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>include/libxml2/libxml/*.h</string>
+            <string>docs/libxml2/README.Linden</string>
+          </array>
+          <key>name</key>
+          <string>common</string>
+        </map>
+        <key>windows</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>Release</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>Release</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/libxml2_a.lib</string>
+            <string>lib/debug/libxml2_a.lib</string>
+          </array>
+          <key>name</key>
+          <string>linux</string>
+        </map>
         <key>linux</key>
         <map>
           <key>build_directory</key>
@@ -91,12 +153,42 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/libxml2/libxml/*.h</string>
-            <string>lib/release/libxml*.so*</string>
             <string>lib/release/*.a</string>
+            <string>lib/debug/*.a</string>
           </array>
           <key>name</key>
           <string>linux</string>
+        </map>
+        <key>darwin</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>Release</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>Release</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/*.a</string>
+            <string>lib/debug/*.a</string>
+          </array>
+          <key>name</key>
+          <string>darwin</string>
         </map>
       </map>
       <key>version</key>
