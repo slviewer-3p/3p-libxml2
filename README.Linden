@@ -17,8 +17,8 @@
          'libxml2' and not 'libxml2-<version>'?
 
     [ ]  Have you reverted/blocked checkin of files modified by
-         configure such as all the *.in, configure itself, COPYING,
-         acconfig.h and other files?
+         configure or nmake such as
+         libxml2/include/libxml/xmlversion.h?
 
     [ ]  On Linux and Mac, confirm Zlib and ICU detection working
          as expected.  That will typically mean these showing up
