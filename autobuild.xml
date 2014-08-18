@@ -5,10 +5,6 @@
     <map>
       <key>zlib</key>
       <map>
-        <key>copyright</key>
-        <string>Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler</string>
-        <key>description</key>
-        <string>Zlib Data Compression Library</string>
         <key>license</key>
         <string>zlib</string>
         <key>license_file</key>
@@ -22,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>b207b3679cadc3ffef5697070c501ce3</string>
+              <string>6658071e3b54b1dd5f5279227aff402a</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/oz-metadata_3p-zlib-update/rev/290734/arch/Darwin/installer/zlib-1.2.8-darwin-290734.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290556/arch/Darwin/installer/zlib-1.2.8-darwin-20140602.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -34,9 +30,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>88a2652f5c7efc1e973708d8c3515767</string>
+              <string>63a62bb3cbef2aad3cca49cb6f2d0aeb</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/oz-metadata_3p-zlib-update/rev/290734/arch/Linux/installer/zlib-1.2.8-linux-290734.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290556/arch/Linux/installer/zlib-1.2.8-linux-20140602.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -46,16 +42,14 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>a168a1e80284f671d12b2d7f24ddf226</string>
+              <string>ab45a628e22a495814e806ce46081806</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/oz-metadata_3p-zlib-update/rev/290734/arch/CYGWIN/installer/zlib-1.2.8-windows-290734.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3pl_3p-zlib-update/rev/290556/arch/CYGWIN/installer/zlib-1.2.8-windows-20140602.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
           </map>
         </map>
-        <key>version</key>
-        <string>1.2.8</string>
       </map>
     </map>
     <key>package_description</key>
