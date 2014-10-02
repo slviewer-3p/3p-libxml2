@@ -9,9 +9,7 @@ TOP="$(dirname "$0")"
 
 PROJECT=libxml2
 LICENSE=Copyright
-VERSION="2.9.1"
 SOURCE_DIR="$PROJECT"
-
 
 if [ -z "$AUTOBUILD" ] ; then 
     fail
@@ -28,6 +26,13 @@ set -x
 
 stage="$(pwd)"
 [ -f "$stage"/packages/include/zlib/zlib.h ] || fail "You haven't installed packages yet."
+
+major_version=$(perl -ne 's/LIBXML_MAJOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
+minor_version=$(perl -ne 's/LIBXML_MINOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
+micro_version=$(perl -ne 's/LIBXML_MICRO_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
+version="${major_version}.${minor_version}.${micro_version}"
+build=${AUTOBUILD_BUILD_ID:=0}
+echo "${version}.${build}" > "${stage}/VERSION.txt"
 
 pushd "$TOP/$SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
@@ -161,7 +166,7 @@ pushd "$TOP/$SOURCE_DIR"
             # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
             sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/
             
-            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.6}"
+            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.7}"
 
             # Debug first
 
