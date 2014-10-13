@@ -11,7 +11,7 @@ PROJECT=libxml2
 LICENSE=Copyright
 SOURCE_DIR="$PROJECT"
 
-if [ -z "$AUTOBUILD" ] ; then 
+if [ -z "$AUTOBUILD" ] ; then
     fail
 fi
 
@@ -164,8 +164,8 @@ pushd "$TOP/$SOURCE_DIR"
             # sdk=/Developer/SDKs/MacOSX10.6.sdk/
             # sdk=/Developer/SDKs/MacOSX10.7.sdk/
             # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
-            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/
-            
+            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/
+
             opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.7}"
 
             # Debug first
@@ -180,7 +180,7 @@ pushd "$TOP/$SOURCE_DIR"
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
                 --prefix="$stage" --libdir="$stage"/lib/debug
-            make 
+            make
             make install
 
             # conditionally run unit tests
@@ -197,7 +197,7 @@ pushd "$TOP/$SOURCE_DIR"
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
                 --prefix="$stage" --libdir="$stage"/lib/release
-            make 
+            make
             make install
 
             # conditionally run unit tests
