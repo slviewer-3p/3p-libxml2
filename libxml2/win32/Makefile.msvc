@@ -106,7 +106,7 @@ ARFLAGS = /nologo
 # Optimisation and debug symbols.
 !if "$(DEBUG)" == "1"
 CFLAGS = $(CFLAGS) /D "_DEBUG" /Od /Z7
-LDFLAGS = $(LDFLAGS) /DEBUG /NODEFAULTLIB:MSVCRTD
+LDFLAGS = $(LDFLAGS) /DEBUG /NODEFAULTLIB:LIBCMT
 !else
 CFLAGS = $(CFLAGS) /D "NDEBUG" /O2 
 # commented out as this break VC10 c.f. 634846

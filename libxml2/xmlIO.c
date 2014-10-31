@@ -620,7 +620,7 @@ xmlWrapOpenUtf8(const char *path,int mode)
 }
 
 #ifdef HAVE_ZLIB_H
-static gzFile
+static gzFile ZEXPORT
 xmlWrapGzOpenUtf8(const char *path, const char *mode)
 {
     gzFile fd;
@@ -714,7 +714,7 @@ static xmlWrapStatFunc xmlWrapStat = xmlWrapStatNative;
 typedef FILE* (* xmlWrapOpenFunc)(const char *f,int mode);
 static xmlWrapOpenFunc xmlWrapOpen = xmlWrapOpenNative;
 #ifdef HAVE_ZLIB_H
-typedef gzFile (* xmlWrapGzOpenFunc) (const char *f, const char *mode);
+typedef gzFile (ZEXPORT * xmlWrapGzOpenFunc) (const char *f, const char *mode);
 static xmlWrapGzOpenFunc xmlWrapGzOpen = gzopen;
 #endif
 /**
