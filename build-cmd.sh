@@ -53,7 +53,7 @@ pushd "$TOP/$SOURCE_DIR"
                     sodir="$(cygpath -w $stage/lib/debug)" \
                     libdir="$(cygpath -w $stage/lib/debug)"
 
-                nmake /f Makefile.msvc ZLIB_LIBRARY=zlibd.lib CRUNTIME=/DZLIB_WINAPI all
+                nmake /f Makefile.msvc ZLIB_LIBRARY=zlibd.lib all
                 nmake /f Makefile.msvc install
 
                 # conditionally run unit tests
@@ -71,7 +71,7 @@ pushd "$TOP/$SOURCE_DIR"
                     sodir="$(cygpath -w $stage/lib/release)" \
                     libdir="$(cygpath -w $stage/lib/release)"
 
-                nmake /f Makefile.msvc ZLIB_LIBRARY=zlib.lib CRUNTIME=/DZLIB_WINAPI all
+                nmake /f Makefile.msvc ZLIB_LIBRARY=zlib.lib all
                 nmake /f Makefile.msvc install
 
                 # conditionally run unit tests
