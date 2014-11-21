@@ -111,7 +111,7 @@ LDFLAGS = $(LDFLAGS) /DEBUG /NODEFAULTLIB:LIBCMT
 CFLAGS = $(CFLAGS) /D "NDEBUG" /O2 
 # commented out as this break VC10 c.f. 634846
 # LDFLAGS = $(LDFLAGS) /OPT:NOWIN98
-LDFLAGS = $(LDFLAGS)
+LDFLAGS = $(LDFLAGS) /NODEFAULTLIB:LIBCMT
 !endif
 
 # Utility commands (prevent conflict with cygwin path executables)
