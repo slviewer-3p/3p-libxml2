@@ -37,41 +37,12 @@ echo "${version}.${build}" > "${stage}/VERSION.txt"
 pushd "$TOP/$SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
 
-        "windows")
+        windows*)
             load_vsvars
 
-            mkdir -p "$stage/lib/debug"
             mkdir -p "$stage/lib/release"
 
             pushd "$TOP/$SOURCE_DIR/win32"
-
-                cscript configure.js zlib=yes icu=no static=yes debug=yes python=no iconv=no \
-                    compiler=msvc \
-                    include="$(cygpath -w $stage/packages/include);$(cygpath -w $stage/packages/include/zlib)" \
-                    lib="$(cygpath -w $stage/packages/lib/debug)" \
-                    prefix="$(cygpath -w $stage)" \
-                    sodir="$(cygpath -w $stage/lib/debug)" \
-                    libdir="$(cygpath -w $stage/lib/debug)"
-
-                nmake /f Makefile.msvc ZLIB_LIBRARY=zlibd.lib all
-                nmake /f Makefile.msvc install
-
-
-                # IMPORTANT:
-                # Enabling the *debug* mode unit tests for this build triggers
-                # a crash when running the testing apps runtest.exe & testrecurse.exe
-                # via the 'nmake /f Makefile.msvc checktests' command.
-                # The crash seems to occur when the test app leaves LibXML land and 
-                # enters zlib land - specifically calling gzopen().
-                # It warrants further investigation but all the unit tests run and pass
-                # in release mode so for the moment, the way forward is to to them off here.
-
-                # conditionally run unit tests
-                #if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                #    nmake /f Makefile.msvc checktests
-                #fi
-
-                nmake /f Makefile.msvc clean
 
                 cscript configure.js zlib=yes icu=no static=yes debug=no python=no iconv=no \
                     compiler=msvc \

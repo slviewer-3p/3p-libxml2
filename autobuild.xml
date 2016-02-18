@@ -53,6 +53,18 @@
             <key>name</key>
             <string>windows</string>
           </map>
+          <key>windows64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>586e332c0695b33daa8596fd79004025</string>
+              <key>url</key>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311167/arch/CYGWIN/installer/zlib-1.2.8.311167-windows64-311167.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>windows64</string>
+          </map>
         </map>
         <key>version</key>
         <string>1.2.8.296881</string>
@@ -191,10 +203,9 @@
           <key>manifest</key>
           <array>
             <string>lib/release/libxml2_a.lib</string>
-            <string>lib/debug/libxml2_a.lib</string>
           </array>
           <key>name</key>
-          <string>linux</string>
+          <string>windows</string>
         </map>
       </map>
       <key>version_file</key>
