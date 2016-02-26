@@ -109,7 +109,7 @@ pushd "$TOP/$SOURCE_DIR"
             # may find the system zlib.h but it won't find the
             # packaged one.
             CFLAGS="$opts -I$stage/packages/include/zlib" \
-                CPPFLAGS="$CPPFLAGS -I$stage/packages/include/zlib" \
+                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib" \
                 LDFLAGS="$opts -L$stage/packages/lib/release" \
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
