@@ -4,6 +4,7 @@
 set -x
 # make errors fatal
 set -e
+set -u
 
 TOP="$(dirname "$0")"
 
@@ -94,7 +95,7 @@ pushd "$TOP/$SOURCE_DIR"
             opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD}"
 
             # Handle any deliberate platform targeting
-            if [ -z "$TARGET_CPPFLAGS" ]; then
+            if [ -z "${TARGET_CPPFLAGS:-}" ]; then
                 # Remove sysroot contamination from build environment
                 unset CPPFLAGS
             else
