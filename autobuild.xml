@@ -29,6 +29,18 @@
             <key>name</key>
             <string>darwin</string>
           </map>
+          <key>darwin64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>cd0511ffdc4fa7c5c1218500a56ebd21</string>
+              <key>url</key>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311792/arch/Darwin/installer/zlib-1.2.8.311792-darwin64-311792.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>darwin64</string>
+          </map>
           <key>linux</key>
           <map>
             <key>archive</key>
@@ -67,7 +79,7 @@
           </map>
         </map>
         <key>version</key>
-        <string>1.2.8.296881</string>
+        <string>1.2.8.311792</string>
       </map>
     </map>
     <key>package_description</key>
