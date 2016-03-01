@@ -22,9 +22,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>1a79eeac199c2d94e4ae4e5d0194e25f</string>
+              <string>aca7e7fa9bbee5df75cd9a54ec399d05</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/zlib_3p-update-zlib/rev/296881/arch/Darwin/installer/zlib-1.2.8.296881-darwin-296881.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Darwin/installer/zlib-1.2.8.311794-darwin-311794.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cd0511ffdc4fa7c5c1218500a56ebd21</string>
+              <string>893b33adefa1792a9e4e2ba072eeb88c</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311792/arch/Darwin/installer/zlib-1.2.8.311792-darwin64-311792.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Darwin/installer/zlib-1.2.8.311794-darwin64-311794.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -46,21 +46,33 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>2eb8e59b6464222dcf4435016ad5f618</string>
+              <string>7c127d4d3d4320b4c47673906c6cbad1</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/zlib_3p-update-zlib/rev/296881/arch/Linux/installer/zlib-1.2.8.296881-linux-296881.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Linux/installer/zlib-1.2.8.311794-linux-311794.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>6167e995eeb097d8abe99c933269bda0</string>
+              <key>url</key>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Linux/installer/zlib-1.2.8.311794-linux64-311794.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
           </map>
           <key>windows</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>ae420ec6d30411c07aac2502d7bbc0f3</string>
+              <string>420ac8df2c2c0ea831398f004a3b3e42</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/zlib_3p-update-zlib/rev/296881/arch/CYGWIN/installer/zlib-1.2.8.296881-windows-296881.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/CYGWIN/installer/zlib-1.2.8.311794-windows-311794.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -70,16 +82,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>586e332c0695b33daa8596fd79004025</string>
+              <string>da1a1a46d3873ad84ed0b18cfc3b9dcb</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311167/arch/CYGWIN/installer/zlib-1.2.8.311167-windows64-311167.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/CYGWIN/installer/zlib-1.2.8.311794-windows64-311794.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.8.311792</string>
+        <string>1.2.8.311794</string>
       </map>
     </map>
     <key>package_description</key>
