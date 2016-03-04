@@ -34,9 +34,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>893b33adefa1792a9e4e2ba072eeb88c</string>
+              <string>928ddd6273308e0d4af8674f36c7dd98</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Darwin/installer/zlib-1.2.8.311794-darwin64-311794.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312019/arch/Darwin/installer/zlib-1.2.8.312019-darwin64-312019.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin64</string>
@@ -46,9 +46,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>7c127d4d3d4320b4c47673906c6cbad1</string>
+              <string>ce741bfd9c998715fc37201032fa3a1f</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Linux/installer/zlib-1.2.8.311794-linux-311794.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312019/arch/Linux/installer/zlib-1.2.8.312019-linux-312019.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -58,9 +58,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>6167e995eeb097d8abe99c933269bda0</string>
+              <string>416e4477951361ff0d5bb3380555fec0</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/Linux/installer/zlib-1.2.8.311794-linux64-311794.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312019/arch/Linux/installer/zlib-1.2.8.312019-linux64-312019.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -70,9 +70,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>420ac8df2c2c0ea831398f004a3b3e42</string>
+              <string>710061c6f154537d2e3d0306c10843c2</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/CYGWIN/installer/zlib-1.2.8.311794-windows-311794.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312019/arch/CYGWIN/installer/zlib-1.2.8.312019-windows-312019.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -82,16 +82,16 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>da1a1a46d3873ad84ed0b18cfc3b9dcb</string>
+              <string>287f61674bde4a0325bae5ab5a50d931</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/311794/arch/CYGWIN/installer/zlib-1.2.8.311794-windows64-311794.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/canonical_3p-zlib/rev/312019/arch/CYGWIN/installer/zlib-1.2.8.312019-windows64-312019.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows64</string>
           </map>
         </map>
         <key>version</key>
-        <string>1.2.8.311794</string>
+        <string>1.2.8.312019</string>
       </map>
     </map>
     <key>package_description</key>
