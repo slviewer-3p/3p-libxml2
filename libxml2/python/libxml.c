@@ -296,7 +296,7 @@ xmlPythonFileReadRaw (void * context, char * buffer, int len) {
 #ifdef PyUnicode_Check
     } else if PyUnicode_Check (ret) {
 #if PY_VERSION_HEX >= 0x03030000
-        size_t size;
+        Py_ssize_t size;
 	const char *tmp;
 
 	/* tmp doesn't need to be deallocated */
@@ -361,7 +361,7 @@ xmlPythonFileRead (void * context, char * buffer, int len) {
 #ifdef PyUnicode_Check
     } else if PyUnicode_Check (ret) {
 #if PY_VERSION_HEX >= 0x03030000
-        size_t size;
+        Py_ssize_t size;
 	const char *tmp;
 
 	/* tmp doesn't need to be deallocated */
@@ -906,7 +906,7 @@ pythonStartElement(void *user_data, const xmlChar * name,
         type = 2;
     if (type != 0) {
         /*
-         * the xmllib interface always generate a dictionnary,
+         * the xmllib interface always generates a dictionary,
          * possibly empty
          */
         if ((attrs == NULL) && (type == 1)) {
@@ -2683,6 +2683,7 @@ libxml_last(ATTRIBUTE_UNUSED PyObject * self, PyObject * args)
                 xmlAttrPtr attr = (xmlAttrPtr) cur;
 
                 res = attr->last;
+		break;
             }
         default:
             res = NULL;
