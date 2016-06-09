@@ -4,6 +4,7 @@
 set -x
 # make errors fatal
 set -e
+set -u
 
 TOP="$(dirname "$0")"
 
@@ -16,16 +17,22 @@ if [ -z "$AUTOBUILD" ] ; then
 fi
 
 if [ "$OSTYPE" = "cygwin" ] ; then
-    export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
+    autobuild="$(cygpath -u $AUTOBUILD)"
+else
+    autobuild="$AUTOBUILD"
 fi
 
 # load autobuild provided shell functions and variables
 set +x
-eval "$("$AUTOBUILD" source_environment)"
+eval "$("$autobuild" source_environment)"
 set -x
 
 stage="$(pwd)"
 [ -f "$stage"/packages/include/zlib/zlib.h ] || fail "You haven't installed packages yet."
+
+# For this library, like most third-party libraries, we only care about
+# Release mode, so source build-variables up front.
+set_build_variables convenience Release
 
 major_version=$(perl -ne 's/LIBXML_MAJOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
 minor_version=$(perl -ne 's/LIBXML_MINOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
@@ -37,41 +44,12 @@ echo "${version}.${build}" > "${stage}/VERSION.txt"
 pushd "$TOP/$SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
 
-        "windows")
+        windows*)
             load_vsvars
 
-            mkdir -p "$stage/lib/debug"
             mkdir -p "$stage/lib/release"
 
             pushd "$TOP/$SOURCE_DIR/win32"
-
-                cscript configure.js zlib=yes icu=no static=yes debug=yes python=no iconv=no \
-                    compiler=msvc \
-                    include="$(cygpath -w $stage/packages/include);$(cygpath -w $stage/packages/include/zlib)" \
-                    lib="$(cygpath -w $stage/packages/lib/debug)" \
-                    prefix="$(cygpath -w $stage)" \
-                    sodir="$(cygpath -w $stage/lib/debug)" \
-                    libdir="$(cygpath -w $stage/lib/debug)"
-
-                nmake /f Makefile.msvc ZLIB_LIBRARY=zlibd.lib all
-                nmake /f Makefile.msvc install
-
-
-                # IMPORTANT:
-                # Enabling the *debug* mode unit tests for this build triggers
-                # a crash when running the testing apps runtest.exe & testrecurse.exe
-                # via the 'nmake /f Makefile.msvc checktests' command.
-                # The crash seems to occur when the test app leaves LibXML land and 
-                # enters zlib land - specifically calling gzopen().
-                # It warrants further investigation but all the unit tests run and pass
-                # in release mode so for the moment, the way forward is to to them off here.
-
-                # conditionally run unit tests
-                #if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                #    nmake /f Makefile.msvc checktests
-                #fi
-
-                nmake /f Makefile.msvc clean
 
                 cscript configure.js zlib=yes icu=no static=yes debug=no python=no iconv=no \
                     compiler=msvc \
@@ -93,7 +71,7 @@ pushd "$TOP/$SOURCE_DIR"
             popd
         ;;
 
-        "linux")
+        linux*)
             # Linux build environment at Linden comes pre-polluted with stuff that can
             # seriously damage 3rd-party builds.  Environmental garbage you can expect
             # includes:
@@ -115,11 +93,11 @@ pushd "$TOP/$SOURCE_DIR"
                 export CXX=/usr/bin/g++-4.6
             fi
 
-            # Default target to 32-bit
-            opts="${TARGET_OPTS:--m32}"
+            # Default target per autobuild build --address-size
+            opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD}"
 
             # Handle any deliberate platform targeting
-            if [ -z "$TARGET_CPPFLAGS" ]; then
+            if [ -z "${TARGET_CPPFLAGS:-}" ]; then
                 # Remove sysroot contamination from build environment
                 unset CPPFLAGS
             else
@@ -127,32 +105,14 @@ pushd "$TOP/$SOURCE_DIR"
                 export CPPFLAGS="$TARGET_CPPFLAGS"
             fi
 
-            # Debug first
-
+            # Release
             # CPPFLAGS will be used by configure and we need to
             # get the dependent packages in there as well.  Process
             # may find the system zlib.h but it won't find the
             # packaged one.
-            CFLAGS="$opts -g -O0 -I$stage/packages/include/zlib" \
-                CPPFLAGS="$CPPFLAGS -I$stage/packages/include/zlib" \
-                LDFLAGS="$opts -g -L$stage/packages/lib/debug" \
-                ./configure --with-python=no --with-pic --with-zlib \
-                --disable-shared --enable-static \
-                --prefix="$stage" --libdir="$stage"/lib/debug
-            make
-            make install
-
-            # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                make check
-            fi
-
-            make clean
-
-            # Release last
-            CFLAGS="$opts -g -O2 -I$stage/packages/include/zlib" \
-                CPPFLAGS="$CPPFLAGS -I$stage/packages/include/zlib" \
-                LDFLAGS="$opts -g -L$stage/packages/lib/release" \
+            CFLAGS="$opts -I$stage/packages/include/zlib" \
+                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib" \
+                LDFLAGS="$opts -L$stage/packages/lib/release" \
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
                 --prefix="$stage" --libdir="$stage"/lib/release
@@ -167,43 +127,17 @@ pushd "$TOP/$SOURCE_DIR"
             make clean
         ;;
 
-        "darwin")
-            # Select SDK with full path.  This shouldn't have much effect on this
-            # build but adding to establish a consistent pattern.
-            #
-            # sdk=/Developer/SDKs/MacOSX10.6.sdk/
-            # sdk=/Developer/SDKs/MacOSX10.7.sdk/
-            # sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/
-            sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/
+        darwin*)
+            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
 
-            opts="${TARGET_OPTS:--arch i386 -iwithsysroot $sdk -mmacosx-version-min=10.7}"
-
-            # Debug first
-
+            # Release last for configuration headers
             # CPPFLAGS will be used by configure and we need to
             # get the dependent packages in there as well.  Process
             # may find the system zlib.h but it won't find the
             # packaged one.
-            CFLAGS="$opts -O0 -gdwarf-2 -I$stage/packages/include/zlib" \
-                CPPFLAGS="$CPPFLAGS -I$stage/packages/include/zlib" \
-                LDFLAGS="$opts -gdwarf-2 -L$stage/packages/lib/debug" \
-                ./configure --with-python=no --with-pic --with-zlib \
-                --disable-shared --enable-static \
-                --prefix="$stage" --libdir="$stage"/lib/debug
-            make
-            make install
-
-            # conditionally run unit tests
-            if [ "${DISABLE_UNIT_TESTS:-0}" = "0" ]; then
-                make check
-            fi
-
-            make clean
-
-            # Release last for configuration headers
-            CFLAGS="$opts -O2 -gdwarf-2 -I$stage/packages/include/zlib" \
-                CPPFLAGS="$CPPFLAGS -I$stage/packages/include/zlib" \
-                LDFLAGS="$opts -gdwarf-2 -L$stage/packages/lib/release" \
+            CFLAGS="$opts -I$stage/packages/include/zlib" \
+                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib" \
+                LDFLAGS="$opts -L$stage/packages/lib/release" \
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
                 --prefix="$stage" --libdir="$stage"/lib/release
