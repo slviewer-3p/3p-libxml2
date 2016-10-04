@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # turn on verbose debugging output for parabuild logs.
-set -x
+exec 4>&1; export BASH_XTRACEFD=4; set -x
 # make errors fatal
 set -e
+# bleat on references to undefined shell variables
 set -u
 
 TOP="$(dirname "$0")"
@@ -13,7 +14,7 @@ LICENSE=Copyright
 SOURCE_DIR="$PROJECT"
 
 if [ -z "$AUTOBUILD" ] ; then
-    fail
+    exit 1
 fi
 
 if [ "$OSTYPE" = "cygwin" ] ; then
@@ -22,17 +23,14 @@ else
     autobuild="$AUTOBUILD"
 fi
 
-# load autobuild provided shell functions and variables
-set +x
-eval "$("$autobuild" source_environment)"
-set -x
-
 stage="$(pwd)"
-[ -f "$stage"/packages/include/zlib/zlib.h ] || fail "You haven't installed packages yet."
+[ -f "$stage"/packages/include/zlib/zlib.h ] || \
+{ echo "You haven't installed packages yet." 1>&2; exit 1; }
 
-# For this library, like most third-party libraries, we only care about
-# Release mode, so source build-variables up front.
-set_build_variables convenience Release
+# load autobuild provided shell functions and variables
+source_environment_tempfile="$stage/source_environment.sh"
+"$autobuild" source_environment > "$source_environment_tempfile"
+. "$source_environment_tempfile"
 
 major_version=$(perl -ne 's/LIBXML_MAJOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
 minor_version=$(perl -ne 's/LIBXML_MINOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
@@ -94,7 +92,7 @@ pushd "$TOP/$SOURCE_DIR"
             fi
 
             # Default target per autobuild build --address-size
-            opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD}"
+            opts="${TARGET_OPTS:--m$AUTOBUILD_ADDRSIZE $LL_BUILD_RELEASE}"
 
             # Handle any deliberate platform targeting
             if [ -z "${TARGET_CPPFLAGS:-}" ]; then
@@ -128,7 +126,7 @@ pushd "$TOP/$SOURCE_DIR"
         ;;
 
         darwin*)
-            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD}"
+            opts="${TARGET_OPTS:--arch $AUTOBUILD_CONFIGURE_ARCH $LL_BUILD_RELEASE}"
 
             # Release last for configuration headers
             # CPPFLAGS will be used by configure and we need to
@@ -153,8 +151,8 @@ pushd "$TOP/$SOURCE_DIR"
         ;;
 
         *)
-            echo "platform not supported"
-            fail
+            echo "platform not supported" 1>&2
+            exit 1
         ;;
     esac
 popd
@@ -163,6 +161,3 @@ mkdir -p "$stage/LICENSES"
 cp "$TOP/$SOURCE_DIR/$LICENSE" "$stage/LICENSES/$PROJECT.txt"
 mkdir -p "$stage"/docs/libxml2/
 cp -a "$TOP"/README.Linden "$stage"/docs/libxml2/
-
-pass
-
