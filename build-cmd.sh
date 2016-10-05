@@ -32,9 +32,18 @@ source_environment_tempfile="$stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
-major_version=$(perl -ne 's/LIBXML_MAJOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
-minor_version=$(perl -ne 's/LIBXML_MINOR_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
-micro_version=$(perl -ne 's/LIBXML_MICRO_VERSION=([\d]+)/$1/ && print' "${TOP}/${PROJECT}/configure.in")
+# Different upstream versions seem to check in different snapshots in time of
+# the configure script.
+for confile in configure.in configure configure.ac
+do configure="${TOP}/${PROJECT}/${confile}"
+   [ -r "$configure" ] && break
+fi
+# If none of the above exist, stop for a human coder to figure out.
+[ -r "$configure" ] || { echo "Can't find configure script for version info" 1>&2; exit 1; }
+
+major_version="$(sed -n -E 's/LIBXML_MAJOR_VERSION=([0-9]+)/\1/p' "$configure")"
+minor_version="$(sed -n -E 's/LIBXML_MINOR_VERSION=([0-9]+)/\1/p' "$configure")"
+micro_version="$(sed -n -E 's/LIBXML_MICRO_VERSION=([0-9]+)/\1/p' "$configure")"
 version="${major_version}.${minor_version}.${micro_version}"
 build=${AUTOBUILD_BUILD_ID:=0}
 echo "${version}.${build}" > "${stage}/VERSION.txt"
