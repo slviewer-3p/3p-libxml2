@@ -37,7 +37,7 @@ source_environment_tempfile="$stage/source_environment.sh"
 for confile in configure.in configure configure.ac
 do configure="${TOP}/${PROJECT}/${confile}"
    [ -r "$configure" ] && break
-fi
+done
 # If none of the above exist, stop for a human coder to figure out.
 [ -r "$configure" ] || { echo "Can't find configure script for version info" 1>&2; exit 1; }
 
