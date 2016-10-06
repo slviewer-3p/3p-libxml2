@@ -7,7 +7,7 @@ set -e
 # bleat on references to undefined shell variables
 set -u
 
-TOP="$(dirname "$0")"
+TOP="$(cd "$(dirname "$0")"; pwd)"
 
 PROJECT=libxml2
 LICENSE=Copyright
@@ -79,19 +79,13 @@ pushd "$TOP/$SOURCE_DIR"
                     # file: the test is based on picking up *.xml from that
                     # directory.
                     # Don't forget, we're in libxml2/win32 at the moment.
-                    badtest="../test/errors/759398.xml"
-                    if [ -f "$badtest" ]
-                    then mv "$badtest" "$badtest.hide"
-                         # Make sure we move it back when we exit this script,
-                         # by whatever means. It's not good for a build script
-                         # to leave modifications to a source tree that's under
-                         # version control. Since each successive trap...EXIT
-                         # command replaces any previous such command,
-                         # accumulate cleanup commands in a variable.
-                         cleanup="mv '$badtest.hide' '$badtest' ; ${cleanup:-}"
-                         trap "$cleanup" EXIT
-                    fi
+                    badtest="$TOP/$SOURCE_DIR/test/errors/759398.xml"
+                    [ -f "$badtest" ] && mv "$badtest" "$badtest.hide"
                     nmake /f Makefile.msvc checktests
+                    # Make sure we move it back after testing. It's not good
+                    # for a build script to leave modifications to a source
+                    # tree that's under version control.
+                    [ -f "$badtest.hide" ] && mv "$badtest.hide" "$badtest"
                 fi
 
                 nmake /f Makefile.msvc clean
