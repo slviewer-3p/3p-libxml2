@@ -98,6 +98,7 @@ LIBS = $(LIBS) pthreadVC.lib
 !if "$(WITH_MODULES)" == "1"
 LIBS = $(LIBS) kernel32.lib
 !endif
+LIBS = $(LIBS) legacy_stdio_definitions.lib
 
 # The archiver and its options.
 AR = lib.exe
