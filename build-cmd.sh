@@ -24,7 +24,7 @@ else
 fi
 
 stage="$(pwd)"
-[ -f "$stage"/packages/include/zlib/zlib.h ] || \
+[ -f "$stage"/packages/include/zlib-ng/zlib.h ] || \
 { echo "You haven't installed packages yet." 1>&2; exit 1; }
 
 # load autobuild provided shell functions and variables
@@ -81,7 +81,7 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
 
                 cscript configure.js zlib=yes icu=no static=yes debug=no python=no iconv=no \
                     compiler=msvc \
-                    include="$(cygpath -w $stage/packages/include);$(cygpath -w $stage/packages/include/zlib)" \
+                    include="$(cygpath -w $stage/packages/include);$(cygpath -w $stage/packages/include/zlib-ng)" \
                     lib="$(cygpath -w $stage/packages/lib/release)" \
                     prefix="$(cygpath -w $stage)" \
                     sodir="$(cygpath -w $stage/lib/release)" \
@@ -146,8 +146,8 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
             # get the dependent packages in there as well.  Process
             # may find the system zlib.h but it won't find the
             # packaged one.
-            CFLAGS="$opts -I$stage/packages/include/zlib" \
-                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib" \
+            CFLAGS="$opts -I$stage/packages/include/zlib-ng" \
+                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib-ng" \
                 LDFLAGS="$opts -L$stage/packages/lib/release" \
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
@@ -171,8 +171,8 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
             # get the dependent packages in there as well.  Process
             # may find the system zlib.h but it won't find the
             # packaged one.
-            CFLAGS="$opts -I$stage/packages/include/zlib" \
-                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib" \
+            CFLAGS="$opts -I$stage/packages/include/zlib-ng" \
+                CPPFLAGS="${CPPFLAGS:-} -I$stage/packages/include/zlib-ng" \
                 LDFLAGS="$opts -L$stage/packages/lib/release" \
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static \
