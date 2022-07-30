@@ -141,6 +141,7 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
                 export CPPFLAGS="$TARGET_CPPFLAGS"
             fi
 
+	    autoreconf
             # Release
             # CPPFLAGS will be used by configure and we need to
             # get the dependent packages in there as well.  Process
