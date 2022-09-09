@@ -127,7 +127,7 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
                 export CPPFLAGS="$TARGET_CPPFLAGS"
             fi
 
-	    autoreconf
+			autoreconf
             # Release
             # CPPFLAGS will be used by configure and we need to
             # get the dependent packages in there as well.  Process
@@ -139,7 +139,7 @@ print(':'.join(OrderedDict((dir.rstrip('/'), 1) for dir in sys.argv[1].split(':'
                 ./configure --with-python=no --with-pic --with-zlib \
                 --disable-shared --enable-static -with-lzma=no \
                 --prefix="$stage" --libdir="$stage"/lib/release
-            make
+            make -j `nproc`
             make install
 
             # conditionally run unit tests
