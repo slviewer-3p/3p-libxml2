@@ -63,7 +63,7 @@
     <key>package_description</key>
     <map>
       <key>canonical_repo</key>
-      <string>https://bitbucket.org/nickyd/3p-libxml2</string>
+      <string>https://github.com/slviewer-3p/3p-libxml2</string>
       <key>copyright</key>
       <string>Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved.</string>
       <key>description</key>
